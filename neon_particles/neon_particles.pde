@@ -47,13 +47,14 @@ class ParticleSystem {
 class Particle {
   PVector position, velocity, acceleration;
   float lifespan;
+  color col;
   
   Particle(PVector loc){
-    acceleration = new PVector(0,0,.5);
-    velocity = new PVector(random(-2, 2), random(-3, 0));
+    acceleration = new PVector(0,0);
+    velocity = new PVector(random(-2, 2), random(-2, 2));
     position = loc.copy();
     lifespan = 255.;
-    
+    col = color(int(random(2)) * 255, int(random(2)) * 255, int(random(2)) * 255);
   }
   
   void update(){
@@ -63,8 +64,8 @@ class Particle {
   }
   
   void onDraw(){
-    stroke(255, lifespan);
-    fill(255, lifespan);
+    stroke(col, lifespan);
+    fill(col, lifespan);
     ellipse(position.x, position.y, 8, 8);
   }
   
