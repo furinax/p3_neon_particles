@@ -1,4 +1,5 @@
 ParticleSystem ps;
+PGraphics pg;
 
 void setup() {
   size(640,480);
@@ -9,7 +10,8 @@ void draw() {
   background(0);
   ps.addParticle();
   ps.update();
-  ps.onDraw();
+  ps.onDraw(pg);
+  filter(BLUR,2);
 }
 
 class ParticleSystem {
@@ -36,10 +38,10 @@ class ParticleSystem {
     }
   }
   
-  void onDraw() {
+  void onDraw(PGraphics _p) {
     for( Particle p: particles)
     {
-      p.onDraw();
+      p.onDraw(_p);
     }
   }
 }
@@ -63,10 +65,10 @@ class Particle {
     lifespan -= 1.0;
   }
   
-  void onDraw(){
-    stroke(col, lifespan);
-    fill(col, lifespan);
-    ellipse(position.x, position.y, 8, 8);
+  void onDraw(PGraphics p){
+    p.stroke(col, lifespan);
+    p.fill(col, lifespan);
+    p.ellipse(position.x, position.y, 8, 8);
   }
   
   boolean isDead(){
