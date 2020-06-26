@@ -16,6 +16,7 @@ void draw() {
   ps.update();
   
   pg.beginDraw();
+  pg.clear();
   ps.onDraw(pg, false);
   pg.endDraw();
   
@@ -24,9 +25,13 @@ void draw() {
   ps.onDraw(pg2, true);
   pg2.endDraw();
   
-  pg.filter(BLUR,2);
+  pg.filter(BLUR,4);
   image(pg2, 0, 0);
-  blend(pg, 0, 0, width, height, 0, 0, width, height, LIGHTEST);
+  blend(pg, 0, 0, width, height, 0, 0, width, height, ADD);
+  blend(pg, 0, 0, width, height, 0, 0, width, height, ADD);
+  blend(pg, 0, 0, width, height, 0, 0, width, height, ADD);
+  blend(pg, 0, 0, width, height, 0, 0, width, height, ADD);
+
 }
 
 class ParticleSystem {
