@@ -1,8 +1,12 @@
 ParticleSystem ps;
 PGraphics pg;
+PGraphics pg2;
 
 void setup() {
   size(640,480);
+  pg = createGraphics(640,480);
+  pg2 = createGraphics(640,480);
+  
   ps = new ParticleSystem(new PVector(width/2, height/2));
 }
 
@@ -10,8 +14,19 @@ void draw() {
   background(0);
   ps.addParticle();
   ps.update();
-  ps.onDraw(pg);
-  filter(BLUR,2);
+  
+  pg.beginDraw();
+  ps.onDraw(pg, false);
+  pg.endDraw();
+  
+  pg2.beginDraw();
+  pg2.clear();
+  ps.onDraw(pg2, true);
+  pg2.endDraw();
+  
+  pg.filter(BLUR,2);
+  image(pg2, 0, 0);
+  blend(pg, 0, 0, width, height, 0, 0, width, height, LIGHTEST);
 }
 
 class ParticleSystem {
@@ -38,10 +53,10 @@ class ParticleSystem {
     }
   }
   
-  void onDraw(PGraphics _p) {
+  void onDraw(PGraphics _p, boolean drawWhite) {
     for( Particle p: particles)
     {
-      p.onDraw(_p);
+      p.onDraw(_p, drawWhite);
     }
   }
 }
@@ -65,9 +80,9 @@ class Particle {
     lifespan -= 1.0;
   }
   
-  void onDraw(PGraphics p){
-    p.stroke(col, lifespan);
-    p.fill(col, lifespan);
+  void onDraw(PGraphics p, boolean drawWhite){
+    p.stroke(drawWhite ? 255 : col, lifespan);
+    p.fill(drawWhite ? 255 : col, lifespan);
     p.ellipse(position.x, position.y, 8, 8);
   }
   
