@@ -25,13 +25,10 @@ void draw() {
   ps.onDraw(pg2, true);
   pg2.endDraw();
   
-  pg.filter(BLUR,4);
-  image(pg2, 0, 0);
-  blend(pg, 0, 0, width, height, 0, 0, width, height, ADD);
-  blend(pg, 0, 0, width, height, 0, 0, width, height, ADD);
-  blend(pg, 0, 0, width, height, 0, 0, width, height, ADD);
-  blend(pg, 0, 0, width, height, 0, 0, width, height, ADD);
-
+  //pg.filter(BLUR,4);
+  image(pg, 0, 0);
+  //image(pg2, 0, 0);
+  blend(pg2, 0, 0, width, height, 0, 0, width, height, LIGHTEST);
 }
 
 class ParticleSystem {
@@ -88,7 +85,7 @@ class Particle {
   void onDraw(PGraphics p, boolean drawWhite){
     p.stroke(drawWhite ? 255 : col, lifespan);
     p.fill(drawWhite ? 255 : col, lifespan);
-    p.ellipse(position.x, position.y, 8, 8);
+    p.ellipse(position.x, position.y, drawWhite?8:16, drawWhite?8:16);
   }
   
   boolean isDead(){
